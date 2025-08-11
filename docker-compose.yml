@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+  mongo:
+    image: mongo:6
+    container_name: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  netlifybackend:
+    build: ./netlifybackend
+    container_name: netlifybackend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - MONGO_URI=mongodb://mongo:27017/mern_db
+    volumes:
+      - ./netlifybackend:/app
+      - /app/node_modules
+    depends_on:
+      - mongo
+
+  freemirror:
+    build: ./freemirror
+    container_name: freemirror
+    restart: always
+    ports:
+      - "5173:5173"
+    stdin_open: true
+    tty: true
+    environment:
+      - NODE_ENV=development
+      - VITE_API_URL=http://backend:3000
+    volumes:
+      - ./freemirror:/app
+      - /app/node_modules
+    depends_on:
+      - netlifybackend
+
+volumes:
+  mongo-data:
