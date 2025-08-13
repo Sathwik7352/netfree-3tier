@@ -11,8 +11,8 @@ services:
       - mongo-data:/data/db
 
   netlifybackend:
-    build: ./netlifybackend
-    container_name: netlifybackend
+    build: ./backend
+    container_name: netfree-backend
     restart: always
     ports:
       - "3000:3000"
@@ -21,14 +21,14 @@ services:
       - PORT=3000
       - MONGO_URI=mongodb://mongo:27017/mern_db
     volumes:
-      - ./netlifybackend:/app
+      - ./backend:/app
       - /app/node_modules
     depends_on:
       - mongo
 
   freemirror:
-    build: ./freemirror
-    container_name: freemirror
+    build: ./frontend
+    container_name: netfree-frontend
     restart: always
     ports:
       - "5173:5173"
@@ -38,7 +38,7 @@ services:
       - NODE_ENV=development
       - VITE_API_URL=http://backend:3000
     volumes:
-      - ./freemirror:/app
+      - ./frontend:/app
       - /app/node_modules
     depends_on:
       - netlifybackend
