@@ -8,7 +8,10 @@ const cors = require('cors');
 const SECRET_KEY = 'ramSuperSecretKey123';
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: 'http://52.91.17.53:5173', // your frontend URL
+  credentials: true                  // allow cookies / credentials
+}));
 
 const myDBPath = path.join(__dirname, 'goodreads.db');
 let db = null;

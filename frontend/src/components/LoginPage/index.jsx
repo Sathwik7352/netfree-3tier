@@ -17,8 +17,8 @@ const LoginPage = () => {
   const handleSubmit = () => {
     const userDetails = { email, password };
     const url = isLogin
-      ? 'https://netfreebe.onrender.com/login'
-      : 'https://netfreebe.onrender.com/register';
+      ? 'http://52.91.17.53:3000/login'
+      : 'http://52.91.17.53:3000/register';
 
     const options = {
       method: 'POST',
